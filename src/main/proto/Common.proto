@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_package = "io.yggdrash.proto";
+option java_outer_classname = "CommonProto";
+
+message PingTime {
+    int64 timestamp = 1;
+}
+
+message PongTime {
+    int64 timestamp = 1;
+}
+
+message Offset {
+    bytes chain = 1;
+    int64 index = 2;
+    int64 count = 3;
+}
+
+message Chain {
+    bytes chain = 1;
+}
+
+message Empty {
+}
+
+message SyncLimit {
+    bytes branch = 1;
+    uint64 offset = 2;
+    uint32 limit = 3;
+    string from = 4;
+}

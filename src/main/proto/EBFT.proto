@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option java_package = "io.yggdrash.proto";
+option java_outer_classname = "EbftProto";
+
+import "Common.proto";
+import "Yggdrash.proto";
+
+message ConsensusList {
+    repeated bytes consensus = 1;
+}
+
+message EbftBlock {
+    Block block = 1;
+    ConsensusList consensusList = 2;
+}
+
+message EbftBlockList {
+    repeated EbftBlock ebftBlock = 1;
+}
+
+message EbftStatus {
+    int64 index = 1;
+    EbftBlockList unConfirmedEbftBlockList = 2;
+    int64 timestamp = 3;
+    bytes signature = 4;
+}
+
+service EbftService {
+    rpc PingPongTime (PingTime) returns (PongTime) {
+    }
+
+    rpc exchangeEbftStatus (EbftStatus) returns (EbftStatus) {
+    }
+
+    rpc getEbftBlockList (Offset) returns (EbftBlockList) {
+    }
+
+    rpc multicastEbftBlock (EbftBlock) returns (Empty) {
+    }
+
+    rpc broadcastEbftBlock (EbftBlock) returns (Empty) {
+    }
+
+    rpc multicastTransaction (Transaction) returns (Empty) {
+    }
+}

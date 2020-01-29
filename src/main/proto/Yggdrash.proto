@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+option java_package = "io.yggdrash.proto";
+option java_outer_classname = "Proto";
+
+import "Common.proto";
+
+service DiscoveryService {
+    rpc findPeers (TargetPeer) returns (PeerList) {
+    }
+    rpc ping (Ping) returns (Pong) {
+    }
+}
+
+service TransactionService {
+    // Client to server simple RPC
+    rpc syncTx (SyncLimit) returns (TransactionList) {
+    }
+
+    rpc sendTx (Transaction) returns (TransactionResponse) {
+    }
+
+    // Client to server streaming RPC.
+    rpc broadcastTx (stream Transaction) returns (Empty) {
+    }
+}
+
+message BlockList {
+    repeated Block blocks = 1;
+}
+
+message TransactionList {
+    repeated Transaction transactions = 1;
+}
+
+message Block {
+    message Header {
+        bytes chain = 1;
+        bytes version = 2; // Version indicates message protocol version
+        bytes type = 3;
+        bytes prevBlockHash = 4; // The hash of the previous block header
+        uint64 index = 5; // The index in the blockchain
+        int64 timestamp = 6; // google.protobuf.Timestamp timestamp ?
+        bytes merkleRoot = 7; // The hash of the BlockBody, by MerkleTree
+        bytes stateRoot = 8; // The hash of the BlockBody, by MerkleTree
+        uint64 bodyLength = 9;
+    }
+
+    Header header = 1;
+    bytes signature = 2;
+    TransactionList body = 3;
+}
+
+message Transaction {
+    message Header {
+        bytes chain = 1;
+        bytes version = 2;
+        bytes type = 3;
+        int64 timestamp = 4;
+        bytes bodyHash = 5;
+        uint64 bodyLength = 6;
+    }
+    Header header = 1;
+    bytes signature = 2;
+    string body = 3;
+}
+
+message TransactionResponse {
+    string txHash = 1;
+    int32 status = 2;               // 0 for a failed transaction and 1 for a successful transaction
+    repeated Log logs = 3;
+}
+
+message Log {
+    string code = 1;
+    repeated string msg = 2;
+}
+
+message TargetPeer {
+    string pubKey = 1;
+    string ip = 2;
+    int32 port = 3;
+    bytes branch = 4;
+    // Fields can be added (i.e.Expiration ...etc)
+}
+
+message PeerList {
+    repeated PeerInfo peers = 1;
+}
+
+message PeerInfo {
+    string url = 1;
+    int64 bestBlock = 2;
+}
+
+message Ping {
+    string ping = 1;
+    string from = 2;
+    string to = 3;
+    bytes branch = 4;
+    int64 bestBlock = 5;
+}
+
+message Pong {
+    string pong = 1;
+    string from = 2;
+    string to = 3;
+    bytes branch = 4;
+    int64 bestBlock = 5;
+}
