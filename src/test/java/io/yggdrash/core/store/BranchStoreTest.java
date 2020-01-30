@@ -146,7 +146,7 @@ public class BranchStoreTest {
         branchStore.addBranchContract(createBranchContract("YEED", "f8f7c637abbd33422f966974663c2d73280840f3"));
         branchStore.addBranchContract(createBranchContract("YEED", "c3c2721803e7099b7ae0d0fc2af7dc4455dda65e"));
 
-        Assert.assertEquals(6, branchStore.getBranchContacts().size());
+        Assert.assertEquals(5, branchStore.getBranchContacts().size());
         Assert.assertEquals("YEED", branchStore.getContractName("c3c2721803e7099b7ae0d0fc2af7dc4455dda65e"));
         Assert.assertEquals("YEED", branchStore.getContractName("f8f7c637abbd33422f966974663c2d73280840f3"));
         Assert.assertEquals("COIN", branchStore.getContractName("a88ae404e837cd1d6e8b9a5a91f188da835ccb56"));
@@ -155,7 +155,7 @@ public class BranchStoreTest {
 
         branchStore.removeBranchContract("c3c2721803e7099b7ae0d0fc2af7dc4455dda65e");
 
-        Assert.assertEquals(5, branchStore.getBranchContacts().size());
+        Assert.assertEquals(4, branchStore.getBranchContacts().size());
         Assert.assertEquals("f8f7c637abbd33422f966974663c2d73280840f3", branchStore.getContractVersion("YEED"));
         Assert.assertNull(branchStore.getContractName("c3c2721803e7099b7ae0d0fc2af7dc4455dda65e"));
         Assert.assertNull(branchStore.getContractVersion("TEST"));

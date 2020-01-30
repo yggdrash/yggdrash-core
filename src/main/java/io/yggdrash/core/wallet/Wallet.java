@@ -68,6 +68,14 @@ public class Wallet {
     private byte[] address;
     private byte[] publicKey;
 
+
+    public Wallet(ECKey key) {
+        this.key = key;
+        this.keyPath = null;
+        this.keyName = null;
+        this.address = key.getAddress();
+        this.publicKey = key.getPubKey();
+    }
     /**
      * Wallet Constructor(generate key file).
      *

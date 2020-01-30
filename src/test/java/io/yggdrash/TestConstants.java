@@ -24,6 +24,7 @@ import io.yggdrash.core.blockchain.Branch;
 import io.yggdrash.core.blockchain.BranchId;
 import io.yggdrash.core.exception.InvalidSignatureException;
 import io.yggdrash.core.wallet.Wallet;
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -69,10 +70,7 @@ public class TestConstants {
             wallet = new Wallet((ECKey) null, keyPathName, password);
 
             //wallet = new Wallet(new DefaultConfig(), "Aa1234567890!");
-            branchFile = new File("../yggdrash-core/src/main/resources", "branch-yggdrash.json");
-            if (!branchFile.exists()) {
-                branchFile = new File("yggdrash-core/src/main/resources", "branch-yggdrash.json");
-            }
+            branchFile = new File(TestConstants.class.getResource("/branch-yggdrash.json").getFile());
         } catch (Exception e) {
             throw new InvalidSignatureException(e);
         }
@@ -116,18 +114,14 @@ public class TestConstants {
             return transferWallet;
         }
 
-        String walletFile  = TestConstants.class.getClass()
-                .getResource("/keys/101167aaf090581b91c08480f6e559acdd9a3ddd.json")
-                .getFile();
-        String password = "Aa1234567890!";
+        String privKey = "0975a56ae1aee263ffcb862600e095732df94339a734667acd25fd776df058c8";
+
         try {
-            transferWallet = new Wallet(walletFile, password);
-        } catch (IOException e) {
-            transferWallet = wallet;
+            ECKey key = ECKey.fromPrivate(Hex.decodeHex(privKey));
+            transferWallet = new Wallet(key);
+        } catch (DecoderException e) {
             e.printStackTrace();
-        } catch (InvalidCipherTextException e) {
             transferWallet = wallet;
-            e.printStackTrace();
         }
 
         return transferWallet;
