@@ -121,9 +121,9 @@ uploadArchives {
                 url 'https://yggdrash.io'
 
                 scm {
-                    connection 'scm:git:git://github.com/yggdrash/yggdrash.git'
-                    developerConnection 'scm:git:ssh://github.com/yggdrash/yggdrash.git'
-                    url 'https://github.com/yggdrash/common/tree/master'
+                    connection 'scm:git:git://github.com/yggdrash/yggdrash-core.git'
+                    developerConnection 'scm:git:ssh://github.com/yggdrash/yggdrash-core.git'
+                    url 'https://github.com/yggdrash/yggdrash-core/tree/master'
                 }
 
                 licenses {
