@@ -202,7 +202,7 @@ public class BlockChainTestUtils {
     private static Transaction createBranchTx(JsonObject json) {
         //TODO stemContract test required
         TransactionBuilder builder = new TransactionBuilder();
-        return builder.setTxBody(TestConstants.STEM_CONTRACT, "create", json, false)
+        return builder.setTxBody(TestConstants.STEM_CONTRACT, "create", json)
                 .setWallet(TestConstants.wallet())
                 .setBranchId(genesis.getBranch().getBranchId())
                 .build();
@@ -212,7 +212,7 @@ public class BlockChainTestUtils {
                                              JsonObject branch) {
         TransactionBuilder builder = new TransactionBuilder();
 
-        return builder.setTxBody(TestConstants.STEM_CONTRACT, method, branch, false)
+        return builder.setTxBody(TestConstants.STEM_CONTRACT, method, branch)
                 .setWallet(TestConstants.wallet())
                 .setBranchId(branchId)
                 .build();

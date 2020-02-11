@@ -63,8 +63,13 @@ public class TransactionBuilder {
     }
 
     public TransactionBuilder setTxBody(ContractVersion contractVersion, String method,
-                                        JsonObject params, boolean isSystem) {
-        return setTxBody(commonTxBody(contractVersion.toString(), method, params, isSystem));
+                                        JsonObject params) {
+        JsonObject txObj = new JsonObject();
+        txObj.addProperty("contractVersion", contractVersion.toString());
+        txObj.addProperty("method", method);
+        txObj.add("params", params);
+
+        return setTxBody(txObj);
     }
 
     @Deprecated
@@ -76,12 +81,12 @@ public class TransactionBuilder {
         return setTxBody(txObj);
     }
 
+    @Deprecated
     private JsonObject commonTxBody(String contractVersion, String method, JsonObject params, boolean isSystem) {
         JsonObject txObj = new JsonObject();
         txObj.addProperty("contractVersion", contractVersion);
         txObj.addProperty("method", method);
         txObj.add("params", params);
-        txObj.addProperty("isSystem", isSystem);
 
         return txObj;
     }
